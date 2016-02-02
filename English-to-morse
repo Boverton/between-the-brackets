@@ -1,0 +1,98 @@
+<?php
+
+//initiate variables
+$text = NULL;
+
+//get and decode Morse Code Json
+$morse_code_url = "https://gist.githubusercontent.com/mohayonao/094c71af14fe4791c5dd/raw/8399262545d0d88507ce42069b0b50043f0eddbc/morse-code.json";
+$morse_code_json = file_get_contents($morse_code_url);
+$morse_code_data = json_decode($morse_code_json);
+
+//set default visibility of translation
+$show_translation = FALSE;
+
+/**
+ * Convert a block of text to morse code
+ * @param string $text
+ * @param array $data
+ * @return string
+ */
+
+function english_to_morse($text, $data) {
+
+    $morse = '';
+
+    //make text lowercase
+    $text = strtolower($text);
+    //create array from text
+    $text_to_array = str_split($text);
+
+
+    foreach($text_to_array as $char) {
+
+        switch($char) {
+
+            case " ":
+                $morse .= ' /';
+                break;
+            case "AA":
+                $morse .= "<br/>";
+                break;
+            case "AR":
+                $morse .= "<br/><br/>END OF MESSAGE";
+                break;
+            case "SK":
+                $morse .= "<br/><br/>END OF TRANSMISSION";
+                break;
+            default:
+                $morse .= $data->$char . '/';
+        }
+    }
+
+    return $morse;
+
+}
+
+//check if submitted and if empty
+if(isset($_POST['submit']) AND !empty($_POST['text'])) {
+
+    $text = $_POST['text'];
+    $translation = english_to_morse($text, $morse_code_data);
+
+    $show_translation = TRUE;
+}
+
+?>
+
+
+
+
+<html>
+
+    <form action="./morse_code_translator.php" method="POST">
+        <fieldset>
+            <legend>Translate English To Morse Code</legend>
+                Translate:
+                <input type="text" name="text" placeholder="Text To Translate">
+            <br/>
+            <br/>
+                <input type="submit" name="submit" value="Submit">
+        </fieldset>
+    </form>
+
+    <br/>
+
+    <fieldset>
+        <legend>Translation</legend>
+
+            <?php
+            if($show_translation) {
+                echo $translation;
+            } else {
+                echo "Submit some text to be translated!";
+            }
+            ?>
+        
+    </fieldset>
+
+</html>
