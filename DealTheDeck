@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * Create a deck of cards
+ * @return array deck with 52 cards
+ */
+function getDeck()
+{
+    $suits = ['<span>&diams;</span>', '<span>&hearts;</span>', '&spades;', '&clubs; '];
+    $ranks = array_merge(
+        array('A'),
+        range(2, 10),
+        array('J', 'Q', 'K')
+    );
+
+    $deck = array();
+
+    foreach ($suits as $suit) 
+    {
+        foreach($ranks as $rank) 
+        {
+            $deck[] = $rank . "$suit";
+        }
+    }
+
+    return $deck;
+}
+
+/**
+ * Shuffles a deck of cards
+ * @param $deck the deck to be shuffled
+ */
+function shuffleDeck(&$deck)
+{
+    shuffle($deck);
+}
+
+/**
+ * Deal the cards - one card at a time to each player
+ * @param int $players Number of players
+ * @param int $numCards Number of cards
+ * @param array $deck the deck being used
+ * @return array the player hands
+ */
+function deal($players, $numCards, &$deck)
+{
+    //initialize player hands
+    $playersHand = array();
+
+    for($cards = 1; $cards <= $numCards; $cards++)
+    {
+        //give each player a card
+        for($player = 1; $player <= $players; $player++)
+        {
+            $playersHand["player$player"][] = array_pop($deck);
+        }
+    }
+
+    return $playersHand;
+}
+
+$deck = getDeck();
+shuffleDeck($deck);
+
+echo '<pre>';
+print_r(deal(5,4,$deck));
+echo '</pre>';
+
+?>
+
+<style>
+    span {
+        color: red;
+    }
+</style>
