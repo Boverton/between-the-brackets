@@ -45,7 +45,7 @@ function english_to_morse($text, $data) {
                 $morse .= "<br/><br/>END OF TRANSMISSION";
                 break;
             default:
-                $morse .= $data->$char . '/';
+                $morse .= isset($data->$char) ? $data->$char. '/' : null;
         }
     }
 
@@ -92,7 +92,7 @@ if(isset($_POST['submit']) AND !empty($_POST['text'])) {
                 echo "Submit some text to be translated!";
             }
             ?>
-        
+
     </fieldset>
 
 </html>
