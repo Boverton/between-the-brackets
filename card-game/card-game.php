@@ -1,7 +1,7 @@
 <?php
-
-include('class_lib.php');
-
+include('./class_lib/Card.php');
+include('./class_lib/Deck.php');
+include('./class_lib/Player.php');
 ?>
 
 <style>
