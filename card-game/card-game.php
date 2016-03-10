@@ -33,20 +33,13 @@ $player_bob = new Player('Bob');
 $player_sue = new Player('Sue');
 $player_brandon = new Player('Brandon');
 
-// Give bob 3 cards
-$player_bob->give_card($Deck->get_cards());
-$player_bob->give_card($Deck->get_cards());
-$player_bob->give_card($Deck->get_cards());
+//give players 3 cards
+for($i = 0; $i < 3; $i++) {
+    $player_bob->give_card($Deck->get_cards());
+    $player_sue->give_card($Deck->get_cards());
+    $player_brandon->give_card($Deck->get_cards());
+}
 
-// Give sue 3 cards
-$player_sue->give_card($Deck->get_cards());
-$player_sue->give_card($Deck->get_cards());
-$player_sue->give_card($Deck->get_cards());
-
-//give Brandon 3 cards
-$player_brandon->give_card($Deck->get_cards());
-$player_brandon->give_card($Deck->get_cards());
-$player_brandon->give_card($Deck->get_cards());
 
 // Show all the cards each player has been dealt
 echo '<h3>'.$player_bob->get_name().'</h3>';
